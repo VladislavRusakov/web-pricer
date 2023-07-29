@@ -1,0 +1,152 @@
+{% csrf_token %}
+{% load static %}
+<html>
+<head>
+    <title>Главная</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width", initital-scale=1.0>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" type="image/png" href="{% static "favicon.ico" %}">
+
+
+    <style type="text/css">
+        body {
+            background-color: #ADD8E6;
+        }
+
+        .grid-item:hover {
+            background-color: #ADD8E6;
+        }
+
+        div.placeholder1 {
+            display: flex;
+            justify-content: center;
+            allign-items: center;
+            margin-top: 300px;
+        }
+
+        @media (max-height: 750px) {
+            div.placeholder1 {
+                display: flex;
+                justify-content: center;
+                allign-items: center;
+                margin-top: 200px;
+            }
+        }
+
+        @media (max-height: 450px) {
+            div.placeholder1 {
+                display: flex;
+                justify-content: center;
+                allign-items: center;
+                margin-top: 100px;
+            }
+        }
+
+        *, *::before, *::after {
+          box-sizing: border-box;
+        }
+        
+        body {
+          margin: 0;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <!-- Навигационная панель -->
+    {% include 'nav.html' %}
+
+    <img source="{% static "favicon.ico" %}">
+
+    <div id='upper'>
+    <button class="btn btn-light" onclick=cleartable() >Clear</button>
+    <input type="email" class="steamid" id="steamid" onchange=sender() placeholder="Enter Steam id">
+    </div>
+
+    <table id="table" class="table table-bordered table-hover border-primary table-bordered">
+        <thead>
+            <tr>
+              <th data-field="name">Game</th>
+              <th data-field="price">Steam price</th>
+              <th data-field="steamlink">Steam link</th>
+              <th data-field="rubprice">Shop price</th>
+              <th data-field="shopgamelink">Shop link</th>
+              <th data-field="shopsearchlink">Search link</th>
+            </tr>
+        </thead>
+        <tbody id="tablebody">
+          <tr class='tableelement'></tr>
+        </tbody>
+    </table>
+
+
+    <script>
+        async function sender() {
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    
+            let steamid = document.getElementById('steamid').value;
+            let data = {'steamid': steamid };
+
+            let loading_div = document.getElementById('upper');
+            loading_div.insertAdjacentHTML('beforeEnd', 
+                `<div class="spinner spinner-border" role="status>
+                    <span id="spinner" class="sr-only spinner"></span>
+                  </div>`)
+
+            let response = await fetch('/ajax',
+             {
+              method: 'POST',
+              body: JSON.stringify(data),
+              headers : {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrftoken,
+              },
+             });
+
+             let response_text = await response.json();
+
+             var arr = []
+             for (const [key, value] of Object.entries(response_text)) {
+               arr.push(value);
+             }
+
+             const elements = document.getElementsByClassName('tableelement');
+             while(elements.length > 0){
+                 elements[0].parentNode.removeChild(elements[0]);
+             }
+
+             let div = document.getElementById('tablebody');
+             for (const game of Object.entries(arr[0])) {
+                div.insertAdjacentHTML('beforeEnd', 
+                `<tr class='tableelement'>
+                   <th>${game[1]['name']}</th>
+                   <th>${game[1]['price']}</th>
+                   <th><a href="${game[1]['steamlink']}">${game[1]['steamlink']}</a></th>
+                   <th>${game[1]['rubprice']}</th>
+                   <th><a href="${game[1]['shopgamelink']}">${game[1]['shopgamelink']}</a></th>
+                   <th><a href="${game[1]['shopsearchlink']}">${game[1]['shopsearchlink']}</a></th>
+                </tr>`)
+            }
+
+            const spinners = document.getElementsByClassName('spinner');
+             while(spinners.length > 0){
+                spinners[0].parentNode.removeChild(spinners[0]);
+             }
+
+        }
+    </script>
+    <script>
+        function cleartable(){
+            const toclear = document.getElementsByClassName('tableelement');
+             while(toclear.length > 0){
+                toclear[0].parentNode.removeChild(toclear[0]);
+             }
+        };
+    </script>
+</body>
+</html>
