@@ -8,6 +8,7 @@ from django.core.paginator import Paginator
 import json
 
 from . import searcher
+from . import async_searcher
 
 
 def mainview(request):
@@ -18,5 +19,5 @@ def mainview(request):
 def ajax(request):
     if request.method == 'POST':
         steamiddata = json.loads(request.body.decode("utf-8"))
-        data = searcher.searcher(steamid=steamiddata['steamid'])
+        data = async_searcher.searcher(steamid=steamiddata['steamid'])
     return JsonResponse({'wishlist': data})

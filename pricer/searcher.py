@@ -3,6 +3,9 @@ import requests
 from bs4 import BeautifulSoup as BS
 
 
+# мой стим 76561198041677591
+# стим поменбше 76561198306798296
+
 def searcher(steamid: str):
     """Забирает вишлист, ищет цены в стиме и на сайте магазина. Создаёт ссылки"""
     SHOP_SEARCH_URL = 'https://steampay.com/search?q='

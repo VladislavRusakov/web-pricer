@@ -1,5 +1,6 @@
 {% csrf_token %}
 {% load static %}
+
 <html>
 <head>
     <title>Главная</title>
@@ -8,8 +9,6 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-    <link rel="shortcut icon" type="image/png" href="{% static "favicon.ico" %}">
-
 
     <style type="text/css">
         body {
@@ -60,10 +59,9 @@
     <!-- Навигационная панель -->
     {% include 'nav.html' %}
 
-    <img source="{% static "favicon.ico" %}">
-
     <div id='upper'>
     <button class="btn btn-light" onclick=cleartable() >Clear</button>
+    76561198041677591
     <input type="email" class="steamid" id="steamid" onchange=sender() placeholder="Enter Steam id">
     </div>
 
@@ -93,7 +91,7 @@
 
             let loading_div = document.getElementById('upper');
             loading_div.insertAdjacentHTML('beforeEnd', 
-                `<div class="spinner spinner-border" role="status>
+                `<div class="spinner spinner-border spinner-border-sm" role="status>
                     <span id="spinner" class="sr-only spinner"></span>
                   </div>`)
 
