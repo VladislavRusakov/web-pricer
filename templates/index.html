@@ -61,7 +61,7 @@
 
     <div id='upper'>
     <button class="btn btn-light" onclick=cleartable() >Clear</button>
-    
+    <button class="btn btn-light" onclick=insertid() >My ID</button>
     <input type="email" class="steamid" id="steamid" onchange=sender() placeholder="Enter Steam id">
     </div>
 
@@ -70,9 +70,7 @@
             <tr>
               <th data-field="name">Game</th>
               <th data-field="price">Steam price</th>
-              <th data-field="steamlink">Steam link</th>
               <th data-field="rubprice">Shop price</th>
-              <th data-field="shopgamelink">Shop link</th>
               <th data-field="shopsearchlink">Search link</th>
             </tr>
         </thead>
@@ -81,6 +79,13 @@
         </tbody>
     </table>
 
+    <script>
+        function insertid () {
+            let field = document.getElementById('steamid')
+            field.value = '76561198041677591'
+            sender();
+        };
+    </script>
 
     <script>
         async function sender() {
@@ -123,10 +128,8 @@
                 div.insertAdjacentHTML('beforeEnd', 
                 `<tr class='tableelement'>
                    <th>${game[1]['name']}</th>
-                   <th>${game[1]['price']}</th>
-                   <th><a href="${game[1]['steamlink']}">${game[1]['steamlink']}</a></th>
-                   <th>${game[1]['rubprice']}</th>
-                   <th><a href="${game[1]['shopgamelink']}">${game[1]['shopgamelink']}</a></th>
+                   <th><a href="${game[1]['steamlink']}">${game[1]['price']}</a></th>
+                   <th><a href="${game[1]['shopgamelink']}">${game[1]['rubprice']}</a></th>
                    <th><a href="${game[1]['shopsearchlink']}">${game[1]['shopsearchlink']}</a></th>
                 </tr>`)
             }
