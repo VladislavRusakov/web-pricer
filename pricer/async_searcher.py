@@ -4,11 +4,11 @@ from bs4 import BeautifulSoup as BS
 import aiohttp
 import asyncio
 
-# мой стим 76561198041677591
-# стим поменбше 76561198306798296
-
 def searcher(steamid: str):  
+    """Main async web scrapping funcion"""
+
     async def http_get(session, url, item):
+        """Sends request, parses the response, fills in the wishlist"""
         async with session.get(url) as response:
             if response.status == 200:
                 data = await response.text()
@@ -22,9 +22,9 @@ def searcher(steamid: str):
                     soup = BS(data, "html.parser")
                     if len(soup.find_all('a', class_="catalog-item")) > 0:
                         item['shopsearchlink'] = shopsearchlink
-                
             
     async def create_task_list(session, wishlist):
+        """Second function of async part. Iterates through wishlist and creates list of tasks with requests"""
         tasks = []
         for item in wishlist:
             item['steamlink'] = f"https://store.steampowered.com/app/{item['id']}/"
@@ -34,17 +34,18 @@ def searcher(steamid: str):
         return results
 
     async def main(wishlist):
+        """Entry point for async srapping. Creates a session. Calls create_task_list()"""
         async with aiohttp.ClientSession() as session:
             data = await create_task_list(session, wishlist)
             return data
 
-    
+    """Function starts working here with getting a wishlist via steam API"""
     SHOP_SEARCH_URL = 'https://steampay.com/search?q='
     SHOP_GAME_URL = 'https://steampay.com/game/'
 
-
     response = requests.get(f'https://store.steampowered.com/wishlist/profiles/{steamid}/wishlistdata').json()
 
+    """This cycle creates a list of dicts and fills in the data"""
     wishlist = []
     for key in response.keys():
         price = 'none'
@@ -62,11 +63,10 @@ def searcher(steamid: str):
                         "shopsearchlink": '',
                         })
     
-
+    """Adds urls to the data wishlist"""
     for item in wishlist:
-        """Основной цикл поиска цен на игры из вишлиста в магазине"""
         item['shopgamelink'] = f"{SHOP_GAME_URL}{item['lowercasename']}"
     
-    
+    """Here comes an async part. Look at main()"""
     asyncio.run(main(wishlist))
     return wishlist
