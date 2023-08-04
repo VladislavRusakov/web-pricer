@@ -56,7 +56,6 @@
 </head>
 
 <body>
-    <!-- Навигационная панель -->
     {% include 'nav.html' %}
 
     <div id='upper'>
@@ -141,12 +140,15 @@
 
         }
     </script>
+
     <script>
         function cleartable(){
             const toclear = document.getElementsByClassName('tableelement');
-             while(toclear.length > 0){
+            while(toclear.length > 0){
                 toclear[0].parentNode.removeChild(toclear[0]);
-             }
+            }
+            let field = document.getElementById('steamid')
+            field.value = ''
         };
     </script>
 </body>
