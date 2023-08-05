@@ -11,46 +11,59 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 
     <style type="text/css">
-        body {
-            background-color: #ADD8E6;
-        }
+      :root {
 
-        .grid-item:hover {
-            background-color: #ADD8E6;
-        }
+        --main-rgb: 173, 216, 230;
+        --nav-rgb: 0, 98, 139;
+        --button-rgb: 255, 255, 255;
+        --button-text-rgb: 0, 0, 0;
+        color-scheme: light;
+      }
 
-        div.placeholder1 {
-            display: flex;
-            justify-content: center;
-            allign-items: center;
-            margin-top: 300px;
-        }
+      *{
+        transition-duration: 0.5s;
+       }
 
-        @media (max-height: 750px) {
-            div.placeholder1 {
-                display: flex;
-                justify-content: center;
-                allign-items: center;
-                margin-top: 200px;
-            }
-        }
+      body {
+        background-color: rgba(var(--main-rgb));
+        margin: 0;
+      }
 
-        @media (max-height: 450px) {
-            div.placeholder1 {
-                display: flex;
-                justify-content: center;
-                allign-items: center;
-                margin-top: 100px;
-            }
-        }
+      button.btn {
+        background-color: rgba(var(--button-rgb));
+        font-size: 16px;
+        color: rgba(var(--button-text-rgb));
+        border-color: rgba(var(--button-rgb));
+      }
 
-        *, *::before, *::after {
-          box-sizing: border-box;
-        }
-        
-        body {
-          margin: 0;
-        }
+      th {
+        cursor: pointer;
+      }
+
+      th:hover {
+        background-color: ghostwhite;
+      }
+
+      a {
+        color: rgba(var(--button-text-rgb));
+      }
+
+      .table-bordered > tbody > tr:nth-child(n+1) > td, .table-bordered > thead > tr:nth-child(n+1) > th {
+        background-color: rgba(var(--button-rgb));
+        color: rgba(var(--button-text-rgb));
+
+     }
+
+      /* Dark theme */
+
+      .dark {
+
+        --main-rgb: 25, 69, 83;
+        --nav-rgb: 7, 19, 23;
+        --button-rgb: 71, 106, 117;
+        --button-text-rgb: 255, 255, 255;
+        color-scheme: dark;
+      }
 
     </style>
 </head>
@@ -59,12 +72,13 @@
     {% include 'nav.html' %}
 
     <div id='upper'>
-    <button class="btn btn-light" onclick=cleartable() >Clear</button>
-    <button class="btn btn-light" onclick=insertid() >My ID</button>
-    <input type="email" class="steamid" id="steamid" onchange=sender() placeholder="Enter Steam id">
+      <button class="btn btn-light" id='menu' onclick=cleartable() >Clear</button>
+      <button class="btn btn-light" id='menu' onclick=insertid() >My ID</button>
+      <button class="btn btn-light" id="themeToggle">Dark</button>
+      <input type="email" class="steamid" id="steamid" onchange=sender() placeholder="Enter Steam id">
     </div>
 
-    <table id="table" class="table table-bordered table-hover border-primary table-bordered">
+    <table id="table" class="table table-bordered table-hover">
         <thead>
             <tr>
               <th data-field="name" onclick=sortTable(0)>Game
@@ -128,6 +142,7 @@
 
     <script>
         function insertid () {
+            cleartable();
             let field = document.getElementById('steamid')
             field.value = '76561198041677591'
             sender();
@@ -317,6 +332,21 @@
             }
 
         }
+    </script>
+
+    <script>
+        let root = document.querySelector(":root");
+        let button = document.querySelector("#themeToggle");
+        
+        button.addEventListener('click', () => {
+          event.preventDefault();
+          root.classList.toggle('dark');
+          if (themeToggle.textContent == 'Dark') {
+            themeToggle.textContent = 'Light';
+          } else {
+            themeToggle.textContent = 'Dark';
+          }
+        })
     </script>
 
 </body>
