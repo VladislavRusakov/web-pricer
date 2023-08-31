@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup as BS
 import aiohttp
 import asyncio
 
+
 def searcher(steamid: str):  
     """Main async web scrapping funcion"""
 

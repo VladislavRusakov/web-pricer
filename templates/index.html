@@ -140,6 +140,7 @@
     <input type="hidden" class='column-flag' id="column2">
     <input type="hidden" class='column-flag' id="column3">
 
+    <!--Insertid-->
     <script>
         function insertid () {
             cleartable();
@@ -149,6 +150,7 @@
         };
     </script>
 
+    <!--Sender-->
     <script>
         async function sender() {
             const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
@@ -204,6 +206,7 @@
         }
     </script>
 
+    <!--Clear table-->
     <script>
         function cleartable(){
             // Clear the table
@@ -224,9 +227,15 @@
             for (var i=0; i < hidden_elements.length; i++) {
                 hidden_elements[i].style.display = 'none';
             }
+
+            const spinners = document.getElementsByClassName('spinner');
+             while(spinners.length > 0){
+                spinners[0].parentNode.removeChild(spinners[0]);
+             }
         };
     </script>
     
+    <!--Sort table-->
     <script>
         function sortTable(number) {
             var table, rows, switching, i, x, y, shouldSwitch;
@@ -334,6 +343,7 @@
         }
     </script>
 
+    <!--Theme change-->
     <script>
         let root = document.querySelector(":root");
         let button = document.querySelector("#themeToggle");
