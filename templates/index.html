@@ -73,7 +73,7 @@
 
     <div id='upper'>
       <button class="btn btn-light" id='menu' onclick=cleartable() >Clear</button>
-      <button class="btn btn-light" id='menu' onclick=insertid() >My ID</button>
+      <button class="btn btn-light" id='my--id--button' onclick=insertid() >My ID</button>
       <button class="btn btn-light" id="themeToggle">Dark</button>
       <input type="email" class="steamid" id="steamid" onchange=sender() placeholder="Enter Steam id">
     </div>
@@ -146,6 +146,7 @@
             cleartable();
             let field = document.getElementById('steamid')
             field.value = '76561198041677591'
+            document.getElementById('my--id--button').disabled = true
             sender();
         };
     </script>
@@ -203,6 +204,8 @@
                 spinners[0].parentNode.removeChild(spinners[0]);
              }
 
+             document.getElementById('my--id--button').disabled = false
+
         }
     </script>
 
@@ -210,6 +213,7 @@
     <script>
         function cleartable(){
             // Clear the table
+            document.getElementById('my--id--button').disabled = false
             const toclear = document.getElementsByClassName('tableelement');
             while(toclear.length > 0){
                 toclear[0].parentNode.removeChild(toclear[0]);
