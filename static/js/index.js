@@ -1,4 +1,3 @@
-
 ///<!--Insertid-->
 
 function insertid () {
@@ -203,20 +202,3 @@ function sortTable(number) {
         present_column.value = 'sorted'
     }
 }
-
-
-///<!--Theme change-->
-
-let root = document.querySelector(":root");
-let button = document.querySelector("#themeToggle");
-
-button.addEventListener('click', () => {
-    event.preventDefault();
-    root.classList.toggle('dark');
-    if (themeToggle.textContent == 'Dark') {
-    themeToggle.textContent = 'Light';
-    } else {
-    themeToggle.textContent = 'Dark';
-    }
-})
-
